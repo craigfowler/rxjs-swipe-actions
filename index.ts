@@ -3,10 +3,26 @@ import { map, mergeMap, takeLast, concatMap, take, takeUntil, withLatestFrom } f
 
 const swipes = getSwipes(window.document.documentElement);
 
-swipes.subscribe(x => {
-  console.log(`Start: ${x.start.x}x${x.start.y}, End: ${x.end.x}x${x.end.y}, Time: ${x.time}`);
-});
+swipes
+  .pipe(map(startAndEndToVector))
+  .subscribe(x => {
+    console.log(`Start: ${x.start.x}x${x.start.y}, End: ${x.end.x}x${x.end.y}, Time: ${x.time}, Velocity: ${x.velocity}`);
+  });
 
+function startAndEndToVector(swipe) {
+  const vector = {
+    x: swipe.end.x - swipe.start.x,
+    y: swipe.end.y - swipe.start.y
+  };
+  const xVelocity = vector.x / swipe.time;
+  const yVelocity = vector.y / swipe.time;
+  const velocity = Math.sqrt(Math.pow(xVelocity, 2) + Math.pow(yVelocity, 2));
+
+  return {
+    ...swipe,
+    velocity
+  };
+}
 
 function getSwipes(ele : HTMLElement) {
   const events = getEvents(ele);
