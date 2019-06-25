@@ -6,7 +6,7 @@ const swipes = getSwipes(window.document.documentElement);
 swipes
   .pipe(map(startAndEndToVector))
   .subscribe(x => {
-    console.log(`Start: ${x.start.x}x${x.start.y}, End: ${x.end.x}x${x.end.y}, Time: ${x.time}, Velocity: ${x.velocity}`);
+    console.log(`Start: ${x.start.x}x${x.start.y}, End: ${x.end.x}x${x.end.y}, Time: ${x.time}, Vector: ${x.vector.x}x${x.vector.y}, Velocity: ${x.velocity}`);
   });
 
 function startAndEndToVector(swipe) {
@@ -20,6 +20,7 @@ function startAndEndToVector(swipe) {
 
   return {
     ...swipe,
+    vector,
     velocity
   };
 }
