@@ -1,5 +1,5 @@
 import { fromEvent, merge, interval } from 'rxjs'; 
-import { map, mergeMap, takeLast, concatMap, take, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { map, takeLast, concatMap, takeUntil, withLatestFrom } from 'rxjs/operators';
 
 const swipes = getSwipes(window.document.documentElement);
 
